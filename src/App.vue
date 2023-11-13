@@ -1,6 +1,80 @@
 <script setup lang="ts">
 //import { RouterLink, RouterView } from 'vue-router'
-//import HelloWorld from './components/HelloWorld.vue'
+// Определение интерфейса для данных формы
+  interface FormData {
+    fio: string;
+    email: string;
+    phone: string;
+    zip: string;
+    city: string;
+    street: string;
+    building: string;
+    appartment: string;
+    isPrivateHouse: boolean;
+  }
+
+  // Получение формы и ее элементов
+  const form = document.querySelector('form');
+
+  if (form instanceof HTMLFormElement) {
+    const fioInput = document.getElementById('fio') as HTMLInputElement;
+    const emailInput = document.getElementById('mail') as HTMLInputElement;
+    const phoneInput = document.getElementById('phone') as HTMLInputElement;
+    const zipInput = document.getElementById('zip') as HTMLInputElement;
+    const cityInput = document.getElementById('city') as HTMLInputElement;
+    const streetInput = document.getElementById('street') as HTMLInputElement;
+    const buildingInput = document.getElementById('building') as HTMLInputElement;
+    const appartmentInput = document.getElementById('appartments') as HTMLInputElement;
+    const isPrivateHouseCheckbox = document.getElementById('subscribe') as HTMLInputElement;
+
+    // Заполнение формы из сохраненных данных
+    const savedData: FormData = {
+      fio: "", // Здесь должны быть сохраненные данные из бд
+      email: "",
+      phone: "",
+      zip: "",
+      city: "",
+      street: "",
+      building: "",
+      appartment: "",
+      isPrivateHouse: false
+    };
+
+    fioInput.value = savedData.fio;
+    emailInput.value = savedData.email;
+    phoneInput.value = savedData.phone;
+    zipInput.value = savedData.zip;
+    cityInput.value = savedData.city;
+    streetInput.value = savedData.street;
+    buildingInput.value = savedData.building;
+    appartmentInput.value = savedData.appartment;
+    isPrivateHouseCheckbox.checked = savedData.isPrivateHouse;
+
+    // Обработчик события для кнопки "Редактировать данные"
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); // Предотвращение отправки формы
+
+      // Сохранение измененных данных
+      const editedData: FormData = {
+        fio: fioInput.value,
+        email: emailInput.value,
+        phone: phoneInput.value,
+        zip: zipInput.value,
+        city: cityInput.value,
+        street: streetInput.value,
+        building: buildingInput.value,
+        appartment: appartmentInput.value,
+        isPrivateHouse: isPrivateHouseCheckbox.checked
+      };
+
+      // Здесь нужно сохранить данные в базе данных
+
+      // Если данные успешно обновлены, отобразить сообщение об успешном обновлении данных
+      console.log('Данные успешно обновлены:', editedData);
+    });
+  } else {
+    console.error('Форма не была найдена на странице');
+  }
 </script>
 
 <template>
@@ -68,73 +142,3 @@
   </div>
   </body>
 </template>
-
-<style>
-
-
-body {
-  max-width: 1280px;
-    font-family: Arial, sans-serif;
-    margin: 10px;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f2f2f2;
-}
-form {
-    width: 440px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-input[type="text"], input[type="email"], input[type="number"], input[type="file"] {
-    width: 100%;
-    margin: 2px 0;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-input[type="file"] {
-    border: none;
-}
-input[type="checkbox"] {
-    margin-right: 5px;
-}
-button {
-  margin: 10px;
-  width: 214px;
-  height: 44px;
-  padding: 10px 20px;
-  background-color: #FFC94F;
-  color: #464855;
-  font-weight: 700 ;
-  font-size: 14px ;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
-}
-.rightbuttons{
-  margin: 30px;
-  height: 70px;
-  width: 100px;
-  position: relative;
-}
-.rightbuttons-elements{
-  width: 242px;
-  height: 53px;
-  margin: 6px;
-  background-color: #3D4F64;
-  color: white;
-  font-size: 16px ;
-  font-weight: 700 ;
-  border-radius: 2px;
-}
-.block {
-  display: inline-block;
-  margin: 10px;
-}
-</style>
